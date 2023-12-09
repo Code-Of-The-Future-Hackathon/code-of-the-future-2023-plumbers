@@ -10,6 +10,9 @@ import DrawerList from "./DrawerList";
 import CustomDrawer from "./CustomDrawer";
 import Map from "../../pages/Map/Map";
 import Home from "../../pages/Home/Home";
+import Analysis from "../../pages/Analysis/Analysis";
+import GreenSpaces from "../../pages/GreenSpaces/GreenSpaces";
+import TreePlanter from "../../pages/TreePlanter/TreePlanter";
 
 const AppDrawer = () => {
   const [open, setOpen] = useState(false);
@@ -36,6 +39,9 @@ const AppDrawer = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/map" element={<Map />} />
+          <Route path="/analysis" element={<Analysis />} />
+          <Route path="/green-spaces" element={<GreenSpaces />} />
+          <Route path="/tree-planter" element={<TreePlanter />} />
         </Routes>
       </Box>
     </Box>
