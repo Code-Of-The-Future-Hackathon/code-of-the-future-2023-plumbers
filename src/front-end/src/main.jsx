@@ -7,11 +7,12 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
+import "./index.css";
 
 import Home from "./pages/Home/Home";
 import Map from "./pages/Map/Map";
 import store from "./redux/store";
-import "./index.css";
+import AppDrawer from "./components/AppDrawer";
 
 const router = createBrowserRouter([
   {
@@ -27,7 +28,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <AppDrawer>
+        <RouterProvider router={router} />
+      </AppDrawer>
     </Provider>
   </React.StrictMode>
 );
