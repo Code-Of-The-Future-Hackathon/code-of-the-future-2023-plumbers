@@ -43,9 +43,9 @@ const GreenSpaces = () => {
 
     try {
       const newRecords = await getGreenspaces();
-      
+
       setRecords(
-        Object.entries(newRecords).map(([id, value]) => ({ id, ...value }))
+        Object.entries(newRecords).map(([id, value]) => ({ ...value, id }))
       );
     } catch (error) {
       console.error(error);
@@ -66,7 +66,10 @@ const GreenSpaces = () => {
       alignItems={"center"}
       justifyContent={"center"}
     >
-      <GreenspacesTable records={records} getNewRecords={getNewRecords}></GreenspacesTable>
+      <GreenspacesTable
+        records={records}
+        getNewRecords={getNewRecords}
+      ></GreenspacesTable>
     </Stack>
   );
 };
