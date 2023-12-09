@@ -1,7 +1,7 @@
 const {
-  getCommunityGreenSpacesAsync,
+  uploadCommunityGreenSpacesAsync,
 } = require("./services/greenSpaceService");
 
-const program = { getCommunityGreenSpacesAsync };
+const program = { uploadCommunityGreenSpacesAsync };
 
 module.exports = program;

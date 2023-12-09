@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const { onRequest } = require("firebase-functions/v2/https");
 
 const { logger } = require("firebase-functions");
@@ -15,12 +17,11 @@ exports.getCommunityGreenSpaces = onRequest(
       res.status(204).send("");
     } else if (req.method === "GET") {
       try {
-        const communityName = req.query.name;
+        const communityName = req.query.name.replaceAll('"', "");
 
-        res.set("Content-Encoding", "gzip");
-        res.set("Content-Type", "application/octet-stream");
+        await program.uploadCommunityGreenSpacesAsync(communityName, db);
 
-        await program.sendCommunityGreenSpacesAsync(communityName, db, res);
+        res.send("Done!");
       } catch (e) {
         logger.error(e);
         res.send(e);

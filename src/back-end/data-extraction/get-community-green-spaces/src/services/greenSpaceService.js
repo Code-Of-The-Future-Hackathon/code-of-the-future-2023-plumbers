@@ -1,8 +1,32 @@
 const openStreetMapService = require("./openStreetMapService");
+const dbService = require("./dbService");
+const typesOfGreenSpaces = [
+  ["leisure", "garden"],
+  ["leisure", "park"],
+  ["natural", "grassland"],
+  ["natural", "scrub"],
+  ["landuse", "grass"],
+];
 
-async function sendCommunityGreenSpacesAsync(communityName, db, res) {
-  const relationId = openStreetMapService.getRelationIdAsync(communityName);
-  await sendCommunityGreenSpacesAsync(relationId);
+async function uploadCommunityGreenSpacesAsync(communityName, db) {
+  if (await dbService.isCommunityDataUploadedAsync(db, communityName)) {
+    return;
+  }
+
+  const relationId = await openStreetMapService.getRelationIdAsync(
+    communityName
+  );
+  await Promise.all(
+    typesOfGreenSpaces.map(async ([key, value]) => {
+      const data =
+        await openStreetMapService.getGreenSpacesOfTypeInRelationAsync(
+          key,
+          value,
+          relationId
+        );
+      await dbService.uploadGreenSpacesAsync(db, communityName, value, data);
+    })
+  );
 }
 
-module.exports = { sendCommunityGreenSpacesAsync };
+module.exports = { uploadCommunityGreenSpacesAsync };
