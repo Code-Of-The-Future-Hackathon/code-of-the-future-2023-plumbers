@@ -4,24 +4,51 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import { useNavigate } from "react-router-dom";
+
+const SCREENS = [
+  {
+    name: "Home",
+    url: "/",
+    icon: <InboxIcon />,
+  },
+  {
+    name: "Map",
+    url: "/map",
+    icon: <InboxIcon />,
+  },
+  {
+    name: "Analysis",
+    url: "/analysis",
+    icon: <InboxIcon />,
+  },
+  {
+    name: "Green Spaces",
+    url: "/green-spaces",
+    icon: <InboxIcon />,
+  },
+  {
+    name: "Tree Planter",
+    url: "/tree-planter",
+    icon: <InboxIcon />,
+  },
+];
 
 const DrawerList = () => {
   const navigate = useNavigate();
 
-  const onDrawerListItemClick = () => {
-    navigate("/map");
+  const onDrawerListItemClick = (screenUrl) => {
+    navigate(screenUrl);
   };
 
   return (
     <List>
-      {["Home", "Map", "Analysis", "Green spaces", "Tree planter"].map((text, index) => (
+      {SCREENS.map((screen) => (
         <ListItem
-          key={text}
+          key={screen.url}
           disablePadding
           sx={{ display: "block" }}
-          onClick={onDrawerListItemClick}
+          onClick={() => onDrawerListItemClick(screen.url)}
         >
           <ListItemButton
             sx={{
@@ -37,9 +64,12 @@ const DrawerList = () => {
                 justifyContent: "center",
               }}
             >
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              {screen.icon}
             </ListItemIcon>
-            <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+            <ListItemText
+              primary={screen.name}
+              sx={{ opacity: open ? 1 : 0 }}
+            />
           </ListItemButton>
         </ListItem>
       ))}
