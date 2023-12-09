@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {  Stack } from "@mui/material";
 import { useDispatch } from "react-redux";
 import FilterGreenspaces from "./FilterGreenspaces";
+import GreenspacesTable from "./GreenspacesTable";
 //import AreasOfPublicUseGroups from './AreasOfPublicUseGroups';
 //import ShowCurrentZonesButton from './ShowCurrentZonesButton';
 //import AreasOfPublicUseTable from './AreasOfPublicUseTable';
@@ -56,6 +57,7 @@ const GreenSpaces = () => {
         filterCategory={filterCategory}
         setFilterCategory={setFilterCategory}
       />
+      <GreenspacesTable></GreenspacesTable>
     </Stack>
   );
 };
