@@ -18,7 +18,7 @@ const GreenSpacesSwitch = () => {
         <ListItem key={switchValue} sx={{ p: 0 }}>
           <FormControlLabel
             control={<Switch checked={greenSpacesSwitch[switchValue]} />}
-            label={switchValue.label}
+            label={switchValue}
             onChange={() => changeSwitch(switchValue)}
           />
         </ListItem>
