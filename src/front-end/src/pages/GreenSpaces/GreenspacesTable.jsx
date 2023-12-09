@@ -1,9 +1,36 @@
-import React from 'react';
-import { Box, Table, TableContainer, TableHead, TableRow, TableCell } from '@mui/material';
-import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material';
+import React from "react";
+import {
+  Box,
+  Table,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TableCell,
+} from "@mui/material";
+import { ArrowDropDown, ArrowDropUp } from "@mui/icons-material";
 
-import GreenspacesRow from './GreenspacesRow';
+import GreenspacesRow from "./GreenspacesRow";
 const GreenspacesTable = () => {
+
+  useEffect(() => {
+    getNewRecords();
+    
+  }, []);
+
+  const getNewRecords = async () => {
+    dispatch(setLoader(true));
+
+    try {
+      const newRecords = await getGreenspaces();
+      setRecords(
+        Object.entries(newRecords).map(([id, value]) => ({ id, ...value }))
+      );
+    } catch (error) {
+      console.error(error);
+    } finally {
+      dispatch(setLoader(false));
+    }
+  };
   return (
     <TableContainer
       component={Box}
