@@ -1,5 +1,6 @@
+import { Box } from "@mui/material";
 import { useState } from "react";
-import Box from "@mui/material/Box";
+ 
 import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
 import { Routes, Route } from "react-router-dom";
@@ -11,9 +12,10 @@ import CustomDrawer from "./components/AppDrawer/CustomDrawer";
 import Map from "./pages/Map/Map";
 import Home from "./pages/Home/Home";
 import Analysis from "./pages/Analysis/Analysis";
-import GreenSpaces from "./pages/GreenSpaces/GreenSpaces";
+ 
 import TreePlanter from "./pages/TreePlanter/TreePlanter";
 import Finance from "./pages/Finance/Finance";
+import GreenSpaces from "./pages/GreenSpaces/GreenSpaces";
 
 const App = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
