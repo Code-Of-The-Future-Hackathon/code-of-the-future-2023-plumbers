@@ -13,6 +13,7 @@ import Home from "../../pages/Home/Home";
 import Analysis from "../../pages/Analysis/Analysis";
 import GreenSpaces from "../../pages/GreenSpaces/GreenSpaces";
 import TreePlanter from "../../pages/TreePlanter/TreePlanter";
+import Finance from "../../pages/Finance/Finance";
 
 const AppDrawer = () => {
   const [open, setOpen] = useState(false);
@@ -42,6 +43,7 @@ const AppDrawer = () => {
           <Route path="/analysis" element={<Analysis />} />
           <Route path="/green-spaces" element={<GreenSpaces />} />
           <Route path="/tree-planter" element={<TreePlanter />} />
+          <Route path="/finance" element={<Finance />} />
         </Routes>
       </Box>
     </Box>
