@@ -17,14 +17,22 @@ const GoogleMaps = () => {
   });
   const [map, setMap] = useState(null);
   const [greenSpaces, setGreenSpaces] = useState([]);
+  const [visibleGreenSpaces, setVisibleGreenSpaces] = useState([]);
   const splitMapScreen = useSelector((state) => state.splitMapScreen);
   const mapZoomLevel = useSelector((state) => state.mapZoomLevel);
   const mapCenter = useSelector((state) => state.mapCenter);
+  const greenSpacesSwitch = useSelector((state) => state.greenSpacesSwitch);
   const dispatch = useDispatch();
 
   useEffect(() => {
     getNewGreenSpaces();
   }, []);
+
+  useEffect(() => {
+    setVisibleGreenSpaces(
+      greenSpaces.filter((greenSpace) => greenSpacesSwitch[greenSpace.type])
+    );
+  }, [greenSpaces, greenSpacesSwitch]);
 
   const getNewGreenSpaces = async () => {
     dispatch(setIsLoading(true));
@@ -80,7 +88,7 @@ const GoogleMaps = () => {
       <div style={{ width: "100%", display: "flex", justifyContent: "end" }}>
         <GreenSpacesSwitch />
       </div>
-      {greenSpaces.map((greenSpace) => (
+      {visibleGreenSpaces.map((greenSpace) => (
         <Polygon
           key={greenSpace.id}
           onClick={() => onGreenSpaceClick(greenSpace)}

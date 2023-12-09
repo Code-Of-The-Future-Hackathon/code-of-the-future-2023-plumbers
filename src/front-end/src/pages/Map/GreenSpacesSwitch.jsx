@@ -8,8 +8,9 @@ const GreenSpacesSwitch = () => {
   const greenSpacesSwitch = useSelector((state) => state.greenSpacesSwitch);
   const dispatch = useDispatch();
 
-  const changeSwitch = (switchValue) =>
+  const changeSwitch = (switchValue) => {
     dispatch(setGreenSpacesSwitch(switchValue));
+  };
 
   return (
     <List sx={{ mt: "5px" }}>
@@ -23,7 +24,7 @@ const GreenSpacesSwitch = () => {
                     backgroundColor: color,
                   },
                   "& .MuiSwitch-thumb": {
-                    color: color,
+                    color,
                   },
                 }}
                 checked={greenSpacesSwitch[switchValue]}
