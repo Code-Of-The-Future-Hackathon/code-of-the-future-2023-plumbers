@@ -1,11 +1,13 @@
-import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
-import { memo, useCallback, useState } from "react";
+import { GoogleMap, useJsApiLoader, Polygon } from "@react-google-maps/api";
+import { memo, useCallback, useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { enqueueSnackbar } from "notistack";
 
 import { setSplitMapScreen } from "../../redux/splitMapScreenSlice";
 import GreenSpacesSwitch from "./GreenSpacesSwitch";
+import { setIsLoading } from "../../redux/isLoadingSlice";
+import { getGreenspaces } from "../../services/greenspacesService";
 
 const GoogleMaps = () => {
   const { isLoaded } = useJsApiLoader({
@@ -13,10 +15,38 @@ const GoogleMaps = () => {
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
   });
   const [map, setMap] = useState(null);
+  const [greenSpaces, setGreenSpaces] = useState([]);
   const splitMapScreen = useSelector((state) => state.splitMapScreen);
   const mapZoomLevel = useSelector((state) => state.mapZoomLevel);
   const mapCenter = useSelector((state) => state.mapCenter);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    getNewGreenSpaces();
+  }, []);
+
+  const getNewGreenSpaces = async () => {
+    dispatch(setIsLoading(true));
+
+    try {
+      const newGreenSpaces = await getGreenspaces();
+
+      setGreenSpaces(
+        Object.entries(newGreenSpaces).map(([id, value]) => {
+          const newGeometry = value.geometry.map((coords) => ({
+            lat: coords.lat,
+            lng: coords.lon,
+          }));
+
+          return { id, ...value, geometry: newGeometry };
+        })
+      );
+    } catch (error) {
+      console.error(error);
+    } finally {
+      dispatch(setIsLoading(false));
+    }
+  };
 
   const onLoad = useCallback(function callback(map) {
     const bounds = new window.google.maps.LatLngBounds(mapCenter);
@@ -62,10 +92,10 @@ const GoogleMaps = () => {
       {greenSpaces.map((greenSpace) => (
         <Polygon
           onClick={() => onGreenSpaceClick(greenSpace)}
-          paths={Object.values(p.points)}
-          options={{
-            fillColor: p.color,
-          }}
+          paths={greenSpace.geometry}
+          // options={{
+          //   fillColor: greenSpace.color,
+          // }}
         />
       ))}
     </GoogleMap>
