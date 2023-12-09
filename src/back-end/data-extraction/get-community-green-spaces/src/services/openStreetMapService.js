@@ -8,15 +8,14 @@ async function getData(url) {
   return data;
 }
 
-async function getRelationAsync(name) {
+async function getRelationIdAsync(name) {
   const url = getURL(`[out:json];
-        (
-            relation["type"="boundary"]["boundary"="administrative"]["admin_level"=7]["name:en"="${name}"];
-            >;
-        );
-        out;`);
+      (
+        relation["type"="boundary"]["boundary"="administrative"]["admin_level"=7]["name:en"="Blagoevgrad"];
+      );
+      out ids;`);
 
-  return getData(url);
+  return getData(url).elements[0].id;
 }
 
 async function getLeisureInRelationAsync(leisure, relation) {
@@ -32,4 +31,4 @@ async function getLeisureInRelationAsync(leisure, relation) {
   return getData(url);
 }
 
-module.exports = { getRelationAsync, getLeisureInRelationAsync };
+module.exports = { getRelationIdAsync, getLeisureInRelationAsync };
