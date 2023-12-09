@@ -14,6 +14,7 @@ import Analysis from "./pages/Analysis/Analysis";
 import GreenSpaces from "./pages/GreenSpaces/GreenSpaces";
 import TreePlanter from "./pages/TreePlanter/TreePlanter";
 import Finance from "./pages/Finance/Finance";
+import Loader from "./components/Loader";
 
 const App = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -46,6 +47,7 @@ const App = () => {
           <Route path="/finance" element={<Finance />} />
         </Routes>
       </Box>
+      <Loader />
     </Box>
   );
 };

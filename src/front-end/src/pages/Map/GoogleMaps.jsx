@@ -2,13 +2,9 @@ import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { memo, useCallback, useState } from "react";
 import Button from "@mui/material/Button";
 import { useDispatch, useSelector } from "react-redux";
+import { enqueueSnackbar } from "notistack";
 
 import { setSplitMapScreen } from "../../redux/splitMapScreenSlice";
-
-const center = {
-  lat: -3.745,
-  lng: -38.523,
-};
 
 const GoogleMaps = () => {
   const { isLoaded } = useJsApiLoader({
@@ -17,10 +13,12 @@ const GoogleMaps = () => {
   });
   const [map, setMap] = useState(null);
   const splitMapScreen = useSelector((state) => state.splitMapScreen);
+  const mapZoomLevel = useSelector((state) => state.mapZoomLevel);
+  const mapCenter = useSelector((state) => state.mapCenter);
   const dispatch = useDispatch();
 
   const onLoad = useCallback(function callback(map) {
-    const bounds = new window.google.maps.LatLngBounds(center);
+    const bounds = new window.google.maps.LatLngBounds(mapCenter);
     map.fitBounds(bounds);
 
     setMap(map);
@@ -40,13 +38,18 @@ const GoogleMaps = () => {
         width: splitMapScreen ? "50%" : "100%",
         height: "91vh",
       }}
-      center={center}
-      zoom={10}
+      center={mapCenter}
+      zoom={mapZoomLevel}
       onLoad={onLoad}
       onUnmount={onUnmount}
     >
       <Button variant="outlined" onClick={onClickGreenSpace}>
         Open Green Space
+      </Button>
+      <Button
+        onClick={() => enqueueSnackbar("Notify!", { variant: "warning" })}
+      >
+        Show snackbar
       </Button>
     </GoogleMap>
   ) : (
