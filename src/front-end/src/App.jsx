@@ -11,9 +11,10 @@ import CustomDrawer from "./components/AppDrawer/CustomDrawer";
 import Map from "./pages/Map/Map";
 import Home from "./pages/Home/Home";
 import Analysis from "./pages/Analysis/Analysis";
-import GreenSpaces from "./pages/GreenSpaces/GreenSpaces";
+ 
 import TreePlanter from "./pages/TreePlanter/TreePlanter";
 import Finance from "./pages/Finance/Finance";
+import GreenSpaces from "./pages/GreenSpaces/GreenSpaces";
 import Loader from "./components/Loader";
 
 const App = () => {
