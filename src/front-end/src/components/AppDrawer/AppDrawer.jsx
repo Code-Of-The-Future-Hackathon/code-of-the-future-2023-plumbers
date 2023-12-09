@@ -34,7 +34,7 @@ const AppDrawer = () => {
         <Divider />
         <DrawerList />
       </CustomDrawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box component="main" sx={{ flexGrow: 1 }}>
         <DrawerHeader />
         <Routes>
           <Route path="/" element={<Home />} />
