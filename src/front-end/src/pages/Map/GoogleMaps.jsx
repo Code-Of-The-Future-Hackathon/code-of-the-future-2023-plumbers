@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { enqueueSnackbar } from "notistack";
 
 import { setSplitMapScreen } from "../../redux/splitMapScreenSlice";
+import GreenSpacesSwitch from "./GreenSpacesSwitch";
 
 const GoogleMaps = () => {
   const { isLoaded } = useJsApiLoader({
@@ -51,6 +52,7 @@ const GoogleMaps = () => {
       >
         Show snackbar
       </Button>
+      <GreenSpacesSwitch />
     </GoogleMap>
   ) : (
     <></>
