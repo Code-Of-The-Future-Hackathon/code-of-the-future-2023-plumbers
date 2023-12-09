@@ -13,7 +13,7 @@ const GreenSpacesSwitch = () => {
     dispatch(setGreenSpacesSwitch(switchValue));
 
   return (
-    <List sx={{ ml: 2 }}>
+    <List sx={{ mt: "5px" }}>
       {switchValuesData.map((switchValue) => (
         <ListItem key={switchValue} sx={{ p: 0 }}>
           <FormControlLabel

@@ -52,7 +52,9 @@ const GoogleMaps = () => {
       >
         Show snackbar
       </Button>
-      <GreenSpacesSwitch />
+      <div style={{ width: "100%", display: "flex", justifyContent: "end" }}>
+        <GreenSpacesSwitch />
+      </div>
     </GoogleMap>
   ) : (
     <></>
