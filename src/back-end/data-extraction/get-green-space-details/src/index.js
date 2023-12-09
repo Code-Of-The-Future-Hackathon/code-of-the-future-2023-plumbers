@@ -17,11 +17,13 @@ exports.getCommunityGreenSpaces = onRequest(
       res.status(204).send("");
     } else if (req.method === "GET") {
       try {
+        const communityName = req.query.communityName.replaceAll('"', "");
         const greenSpaceId = req.query.id.replaceAll('"', "");
         const greenSpaceType = req.query.type.replaceAll('"', "");
 
         const response = await program.getGreenSpaceDetailsAsync(
           db,
+          communityName,
           greenSpaceId,
           greenSpaceType
         );

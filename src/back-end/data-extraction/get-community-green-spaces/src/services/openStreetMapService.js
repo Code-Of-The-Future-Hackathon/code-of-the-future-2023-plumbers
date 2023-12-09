@@ -37,9 +37,8 @@ async function getGreenSpacesOfTypeInRelationAsync(
         return;
       }
       ids[x.id] = true;
-      if (tagValue == "park") {
-        x.name = await getGreenSpaceName(x.id);
-      } else {
+      x.name = await getGreenSpaceName(x.id);
+      if (!x.name) {
         x.name = "";
       }
       copyElements.push(x);
@@ -63,16 +62,10 @@ async function getCommunityCenterAsync(communityName) {
 
 async function getGreenSpaceName(id) {
   const url = getURL(`data=[out:json];way(${id});out;`);
-
   try {
     const elements = await getElementsAsync(url);
-    const name = elements[0].tags.name;
-    if (!name) {
-      return "";
-    }
-
-    return name;
-  } catch {
+    return elements[0].tags.name;
+  } catch (e) {
     return "";
   }
 }

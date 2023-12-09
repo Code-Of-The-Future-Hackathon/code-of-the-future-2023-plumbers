@@ -8,12 +8,13 @@ async function getElementsAsync(url) {
   return data.elements;
 }
 
-// async function getRelationIdAsync(name) {
-//   const url = getURL(
-//     `data=[out:json];(relation["type"="boundary"]["boundary"="administrative"]["admin_level"=7]["name:en"=${name}];);out ids;`
-//   );
-//   const data = await getElementsAsync(url);
-//   return data[0].id;
-// }
+async function getGreenSpaceObjectsInRangeAsync(center, radius) {
+  const url = getURL(
+    `data=[out:json];(node(around:${radius}, ${center.lat}, ${center.lon});<;);out body;`
+  );
+  console.log(url);
+  const data = await getElementsAsync(url);
+  return data;
+}
 
-module.exports = {};
+module.exports = { getGreenSpaceObjectsInRangeAsync };
