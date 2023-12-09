@@ -9,7 +9,6 @@ import { setMapCenter } from "../../redux/mapCenterSlice";
 import { setIsLoading } from "../../redux/isLoadingSlice";
 
 const GreenspacesRow = ({ record }) => {
-  console.log(record);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
