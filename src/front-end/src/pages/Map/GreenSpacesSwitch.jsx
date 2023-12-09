@@ -2,7 +2,7 @@ import { FormControlLabel, List, ListItem, Switch } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 
 import { setGreenSpacesSwitch } from "../../redux/greenSpacesSwitchSlice";
-import { GREEN_SPACES_TYPES } from "../../constants";
+import { GREEN_SPACES_COLORS } from "../../constants";
 
 const GreenSpacesSwitch = () => {
   const greenSpacesSwitch = useSelector((state) => state.greenSpacesSwitch);
@@ -13,10 +13,22 @@ const GreenSpacesSwitch = () => {
 
   return (
     <List sx={{ mt: "5px" }}>
-      {GREEN_SPACES_TYPES.map((switchValue) => (
+      {Object.entries(GREEN_SPACES_COLORS).map(([switchValue, color]) => (
         <ListItem key={switchValue} sx={{ p: 0 }}>
           <FormControlLabel
-            control={<Switch checked={greenSpacesSwitch[switchValue]} />}
+            control={
+              <Switch
+                sx={{
+                  "& .MuiSwitch-track": {
+                    backgroundColor: color,
+                  },
+                  "& .MuiSwitch-thumb": {
+                    color: color,
+                  },
+                }}
+                checked={greenSpacesSwitch[switchValue]}
+              />
+            }
             label={switchValue}
             onChange={() => changeSwitch(switchValue)}
           />
