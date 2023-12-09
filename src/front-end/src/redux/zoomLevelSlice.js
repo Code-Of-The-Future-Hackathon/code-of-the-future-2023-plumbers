@@ -5,7 +5,7 @@ export const zoomLevelSlice = createSlice({
   initialState: 14,
   reducers: {
     setZoomLevel: (state, action) => {
-      state = action.payload;
+      return action.payload;
     },
   },
 });
