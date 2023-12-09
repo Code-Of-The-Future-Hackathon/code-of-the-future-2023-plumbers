@@ -11,7 +11,7 @@ export const greenSpacesSwitchSlice = createSlice({
   },
   reducers: {
     setGreenSpacesSwitch: (state, action) => {
-      state[action.payload.key] = !state[action.payload.value];
+      state[action.payload] = !state[action.payload];
     },
   },
 });
