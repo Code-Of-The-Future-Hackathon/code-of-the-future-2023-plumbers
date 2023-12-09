@@ -6,6 +6,7 @@ import mapCenterReducer from "./mapCenterSlice.js";
 import isLoadingReducer from "./isLoadingSlice.js";
 import greenSpacesSwitchReducer from "./greenSpacesSwitchSlice.js";
 import greenspacesReducer from "./greenspaces.js";
+import activeGreenSpaceReducer from "./activeGreenSpaceSlice.js";
 
 export default configureStore({
   reducer: {
@@ -15,5 +16,6 @@ export default configureStore({
     isLoading: isLoadingReducer,
     greenSpacesSwitch: greenSpacesSwitchReducer,
     greenspaces: greenspacesReducer,
+    activeGreenSpace: activeGreenSpaceReducer,
   },
 });
