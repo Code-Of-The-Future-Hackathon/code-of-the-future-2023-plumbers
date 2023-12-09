@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const mapZoomLevelSlice = createSlice({
   name: "mapZoomLevel",
-  initialState: 14,
+  initialState: 9,
   reducers: {
     setZoomLevel: (state, action) => {
       return action.payload;
