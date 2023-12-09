@@ -1,7 +1,7 @@
 import { collection, getDocs, getFirestore } from "firebase/firestore";
 
 import { app } from "../../firebaseConfig";
-import { GREEN_SPACES_TYPES } from "../constants";
+import { GREEN_SPACES_COLORS } from "../constants";
 
 const dbCloudFirestore = getFirestore(app);
 
@@ -9,7 +9,7 @@ export const getGreenspaces = async () => {
   try {
     let allAreas = [];
 
-    for (const collectionName of GREEN_SPACES_TYPES) {
+    for (const collectionName of Object.keys(GREEN_SPACES_COLORS)) {
       const querySnapshot = await getDocs(
         collection(dbCloudFirestore, `towns/Burgas/${collectionName}`)
       );

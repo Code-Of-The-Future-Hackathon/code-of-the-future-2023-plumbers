@@ -7,4 +7,3 @@ export const GREEN_SPACES_COLORS = {
   park: "#32CD32", // Leaf Green
   scrub: "#808000", // Olive
 };
-export const GREEN_SPACES_TYPES = Object.keys(GREEN_SPACES_COLORS);
