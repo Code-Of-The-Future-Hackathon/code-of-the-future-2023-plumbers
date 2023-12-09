@@ -13,7 +13,7 @@ const GreenSpacesSwitch = () => {
   };
 
   return (
-    <List sx={{ mt: "5px" }}>
+    <List sx={{ mt: "50px" }}>
       {Object.entries(GREEN_SPACES_COLORS).map(([switchValue, color]) => (
         <ListItem key={switchValue} sx={{ p: 0 }}>
           <FormControlLabel
