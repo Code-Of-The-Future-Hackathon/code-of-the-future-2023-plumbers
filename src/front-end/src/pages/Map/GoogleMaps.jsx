@@ -33,6 +33,10 @@ const GoogleMaps = () => {
     dispatch(setSplitMapScreen(true));
   };
 
+  const onGreenSpaceClick = (greenSpace) => {
+    console.log(greenSpace);
+  };
+
   return isLoaded ? (
     <GoogleMap
       mapContainerStyle={{
@@ -55,6 +59,15 @@ const GoogleMaps = () => {
       <div style={{ width: "100%", display: "flex", justifyContent: "end" }}>
         <GreenSpacesSwitch />
       </div>
+      {greenSpaces.map((greenSpace) => (
+        <Polygon
+          onClick={() => onGreenSpaceClick(greenSpace)}
+          paths={Object.values(p.points)}
+          options={{
+            fillColor: p.color,
+          }}
+        />
+      ))}
     </GoogleMap>
   ) : (
     <></>
