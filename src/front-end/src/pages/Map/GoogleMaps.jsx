@@ -17,6 +17,7 @@ const GoogleMaps = () => {
   });
   const [map, setMap] = useState(null);
   const splitMapScreen = useSelector((state) => state.splitMapScreen);
+  const mapZoomLevel = useSelector((state) => state.mapZoomLevel);
   const dispatch = useDispatch();
 
   const onLoad = useCallback(function callback(map) {
@@ -41,7 +42,7 @@ const GoogleMaps = () => {
         height: "91vh",
       }}
       center={center}
-      zoom={10}
+      zoom={mapZoomLevel}
       onLoad={onLoad}
       onUnmount={onUnmount}
     >
