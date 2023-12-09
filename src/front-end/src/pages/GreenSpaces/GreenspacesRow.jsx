@@ -1,18 +1,15 @@
 import { IconButton, TableCell, TableRow } from "@mui/material";
- 
+
 import { FormatShapes, ModeEdit } from "@mui/icons-material";
 
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import { setMapCenter } from "redux/setMapCenterSlice";
-import { setMapZoomLevel } from "redux/mapZoomLevelSlice";
-import { setIsLoading } from "redux/loader/slice";
-import { useState } from "react";
-import { changePublicAreaGroup } from "services/areasOfPublicUse";
-import { setNotification } from "redux/notification/slice";
 
-const AreasOfPublicUseTableRow = ({ record }) => {
-  const [currentGroup, setCurrentGroup] = useState(record.group || "");
+import { setMapCenter } from "../../redux/mapCenterSlice";
+import { setIsLoading } from "../../redux/isLoadingSlice";
+
+const GreenspacesRow = ({ record }) => {
+  console.log(record);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -70,7 +67,6 @@ const AreasOfPublicUseTableRow = ({ record }) => {
       }}
     >
       <TableCell>{record.name}</TableCell>
-
       <TableCell>{record.area}</TableCell>
       <TableCell>{record?.zone?.area?.toFixed(3) || "-"}</TableCell>
       <TableCell>{record.category}</TableCell>
@@ -87,4 +83,4 @@ const AreasOfPublicUseTableRow = ({ record }) => {
   );
 };
 
-export default AreasOfPublicUseTableRow;
+export default GreenspacesRow;

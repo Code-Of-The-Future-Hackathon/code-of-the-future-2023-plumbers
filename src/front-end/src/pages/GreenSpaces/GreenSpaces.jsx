@@ -1,19 +1,17 @@
-import React, { useState } from "react";
-import {  Stack } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Stack } from "@mui/material";
 import { useDispatch } from "react-redux";
-import FilterGreenspaces from "./FilterGreenspaces";
+
 import GreenspacesTable from "./GreenspacesTable";
-//import AreasOfPublicUseGroups from './AreasOfPublicUseGroups';
-//import ShowCurrentZonesButton from './ShowCurrentZonesButton';
-//import AreasOfPublicUseTable from './AreasOfPublicUseTable';
+import { setIsLoading } from "../../redux/isLoadingSlice";
+import { getGreenspaces } from "../../services/greenspacesService";
 
 const GreenSpaces = () => {
   const [records, setRecords] = useState([]);
   const [filterName, setFilterName] = useState("");
   const [filterArea, setFilterArea] = useState("");
   const [filterCategory, setFilterCategory] = useState("");
-  const [selectedGroup, setSelectedGroup] = useState("");
-  const [groups, setGroups] = useState([]);
+
   const dispatch = useDispatch();
 
   const nameMatches = (record, filterName) =>
@@ -33,9 +31,28 @@ const GreenSpaces = () => {
     (record) =>
       nameMatches(record, filterName) &&
       areaMatches(record, filterArea) &&
-      categoryMatches(record, filterCategory) &&
-      groupMatches(record, selectedGroup)
+      categoryMatches(record, filterCategory)
   );
+
+  useEffect(() => {
+    getNewRecords();
+  }, []);
+
+  const getNewRecords = async () => {
+    dispatch(setIsLoading(true));
+
+    try {
+      const newRecords = await getGreenspaces();
+      console.log(newRecords)
+      setRecords(
+        Object.entries(newRecords).map(([id, value]) => ({ id, ...value }))
+      );
+    } catch (error) {
+      console.error(error);
+    } finally {
+      dispatch(setIsLoading(false));
+    }
+  };
 
   return (
     <Stack
@@ -49,15 +66,7 @@ const GreenSpaces = () => {
       alignItems={"center"}
       justifyContent={"center"}
     >
-      <FilterGreenspaces
-        filterName={filterName}
-        setFilterName={setFilterName}
-        filterArea={filterArea}
-        setFilterArea={setFilterArea}
-        filterCategory={filterCategory}
-        setFilterCategory={setFilterCategory}
-      />
-      <GreenspacesTable></GreenspacesTable>
+      <GreenspacesTable records={records}></GreenspacesTable>
     </Stack>
   );
 };

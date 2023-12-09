@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Table,
@@ -6,31 +6,39 @@ import {
   TableHead,
   TableRow,
   TableCell,
+  TableBody,
 } from "@mui/material";
 import { ArrowDropDown, ArrowDropUp } from "@mui/icons-material";
 
 import GreenspacesRow from "./GreenspacesRow";
-const GreenspacesTable = () => {
+const GreenspacesTable = ({records, getNewRecords}) => {
 
-  useEffect(() => {
-    getNewRecords();
-    
-  }, []);
 
-  const getNewRecords = async () => {
-    dispatch(setLoader(true));
 
-    try {
-      const newRecords = await getGreenspaces();
-      setRecords(
-        Object.entries(newRecords).map(([id, value]) => ({ id, ...value }))
-      );
-    } catch (error) {
-      console.error(error);
-    } finally {
-      dispatch(setLoader(false));
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
+  const sortedRecords = [...records].sort((a, b) => {
+    if (sortConfig.key === 'area' || sortConfig.key === 'dynamic-area') {
+      const areaA = parseFloat(a.area);
+      const areaB = parseFloat(b.area);
+      return sortConfig.direction === 'asc' ? areaA - areaB : areaB - areaA;
+    } else {
+      if (a[sortConfig.key] < b[sortConfig.key]) {
+        return sortConfig.direction === 'asc' ? -1 : 1;
+      }
+      if (a[sortConfig.key] > b[sortConfig.key]) {
+        return sortConfig.direction === 'asc' ? 1 : -1;
+      }
     }
+    return 0;
+  });
+  const handleSort = (key) => {
+    let direction = 'asc';
+    if (sortConfig.key === key && sortConfig.direction === 'asc') {
+      direction = 'desc';
+    }
+    setSortConfig({ key, direction });
   };
+ 
   return (
     <TableContainer
       component={Box}
@@ -57,19 +65,7 @@ const GreenspacesTable = () => {
                 )
               ) : null}
             </TableCell>
-            <TableCell
-              sx={{ fontWeight: "bold", fontSize: "1.2rem" }}
-              onClick={() => handleSort("group")}
-            >
-              Група
-              {sortConfig.key === "group" ? (
-                sortConfig.direction === "asc" ? (
-                  <ArrowDropDown />
-                ) : (
-                  <ArrowDropUp />
-                )
-              ) : null}
-            </TableCell>
+             
             <TableCell
               sx={{ fontWeight: "bold", fontSize: "1.2rem" }}
               onClick={() => handleSort("area")}
@@ -123,7 +119,6 @@ const GreenspacesTable = () => {
               <GreenspacesRow
                 key={record.id}
                 record={record}
-                groups={groups}
                 getNewRecords={getNewRecords}
               />
             ))

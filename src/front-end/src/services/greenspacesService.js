@@ -1,11 +1,11 @@
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, getFirestore } from "firebase/firestore";
 import { app } from "../../firebaseConfig";
 const dbCloudFirestore = getFirestore(app);
 
-export const getAreasOfPublicUse = async () => {
+export const getGreenspaces = async () => {
   try {
     const querySnapshot = await getDocs(
-      collection(dbCloudFirestore, "towns/Burgas/park ")
+      collection(dbCloudFirestore, "towns/Burgas/park")
     );
 
     if (querySnapshot.empty) {
@@ -17,12 +17,10 @@ export const getAreasOfPublicUse = async () => {
 
     await Promise.all(
       querySnapshot.docs.map(async (doc) => {
-        const characteristics = await getCharacteristics(doc.ref);
-        const cleaning = await getCleaning(doc.ref);
+        const cleaning = await getCleaningTypes(doc.ref);
 
         areas[doc.id] = {
           ...doc.data(),
-          characteristics,
           cleaning,
         };
       })
@@ -33,4 +31,16 @@ export const getAreasOfPublicUse = async () => {
     console.error("Error getting areas: ", error);
     return error;
   }
+};
+
+const getCleaningTypes = async (docRef) => {
+  const cleaningSnapshot = await getDocs(collection(docRef, "cleaning"));
+
+  const cleaning = [];
+
+  cleaningSnapshot.docs.forEach((doc) => {
+    cleaning.push(doc.data());
+  });
+
+  return cleaning;
 };
