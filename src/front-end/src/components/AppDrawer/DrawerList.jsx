@@ -16,7 +16,7 @@ const DrawerList = () => {
 
   return (
     <List>
-      {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+      {["Home", "Map", "Analysis", "Green spaces", "Tree planter"].map((text, index) => (
         <ListItem
           key={text}
           disablePadding
