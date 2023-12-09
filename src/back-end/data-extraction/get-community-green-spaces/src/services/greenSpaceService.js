@@ -13,9 +13,15 @@ async function uploadCommunityGreenSpacesAsync(communityName, db) {
     return;
   }
 
+  const communityCenter = await openStreetMapService.getCommunityCenterAsync(
+    communityName
+  );
+  await dbService.setCommunityCenterAsync(db, communityName, communityCenter);
+
   const relationId = await openStreetMapService.getRelationIdAsync(
     communityName
   );
+
   await Promise.all(
     typesOfGreenSpaces.map(async ([key, value]) => {
       const data =

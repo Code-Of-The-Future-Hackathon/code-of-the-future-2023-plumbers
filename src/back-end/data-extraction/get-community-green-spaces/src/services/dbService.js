@@ -13,4 +13,14 @@ function uploadGreenSpacesAsync(db, communityName, type, data) {
   return Promise.all(data.map((x) => greenSpaceOfTypeRef.doc().set(x)));
 }
 
-module.exports = { isCommunityDataUploadedAsync, uploadGreenSpacesAsync };
+function setCommunityCenterAsync(db, communityName, center) {
+  const communityRef = db.collection("towns").doc(communityName);
+
+  return communityRef.set({ center });
+}
+
+module.exports = {
+  isCommunityDataUploadedAsync,
+  uploadGreenSpacesAsync,
+  setCommunityCenterAsync,
+};

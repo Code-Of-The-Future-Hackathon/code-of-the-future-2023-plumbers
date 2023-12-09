@@ -27,10 +27,58 @@ async function getGreenSpacesOfTypeInRelationAsync(
     )});map_to_area->.a;(way(area.a)[${tagName}=${tagValue}];);out geom;`
   );
 
-  const elements = await getElementsAsync(url);
-  return elements.map((x) => {
-    return { id: x.id, type: x.type, geometry: x.geometry };
+  let elements = await getElementsAsync(url);
+
+  const ids = {};
+  let copyElements = [];
+  await Promise.all(
+    elements.map(async (x) => {
+      if (ids[x.id]) {
+        return;
+      }
+      ids[x.id] = true;
+      if (tagValue == "park") {
+        x.name = await getGreenSpaceName(x.id);
+      } else {
+        x.name = "";
+      }
+      copyElements.push(x);
+    })
+  );
+
+  return copyElements.map((x) => {
+    return { id: x.id, name: x.name, type: x.type, geometry: x.geometry };
   });
 }
 
-module.exports = { getRelationIdAsync, getGreenSpacesOfTypeInRelationAsync };
+async function getCommunityCenterAsync(communityName) {
+  const url = getURL(
+    `data=[out:json];area["name:en"=${communityName}]->.searchArea;(node(area.searchArea)["place"="city"];);out;`
+  );
+
+  const elements = await getElementsAsync(url);
+  const community = elements[0];
+  return { lat: community.lat, lng: community.lon };
+}
+
+async function getGreenSpaceName(id) {
+  const url = getURL(`data=[out:json];way(${id});out;`);
+
+  try {
+    const elements = await getElementsAsync(url);
+    const name = elements[0].tags.name;
+    if (!name) {
+      return "";
+    }
+
+    return name;
+  } catch {
+    return "";
+  }
+}
+
+module.exports = {
+  getRelationIdAsync,
+  getGreenSpacesOfTypeInRelationAsync,
+  getCommunityCenterAsync,
+};
