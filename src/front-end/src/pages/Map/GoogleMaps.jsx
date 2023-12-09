@@ -8,6 +8,7 @@ import { setSplitMapScreen } from "../../redux/splitMapScreenSlice";
 import GreenSpacesSwitch from "./GreenSpacesSwitch";
 import { setIsLoading } from "../../redux/isLoadingSlice";
 import { getGreenspaces } from "../../services/greenspacesService";
+import { GREEN_SPACES_COLORS } from "../../constants";
 
 const GoogleMaps = () => {
   const { isLoaded } = useJsApiLoader({
@@ -84,9 +85,9 @@ const GoogleMaps = () => {
           key={greenSpace.id}
           onClick={() => onGreenSpaceClick(greenSpace)}
           paths={greenSpace.geometry}
-          // options={{
-          //   fillColor: greenSpace.color,
-          // }}
+          options={{
+            fillColor: GREEN_SPACES_COLORS[greenSpace.type],
+          }}
         />
       ))}
     </GoogleMap>
