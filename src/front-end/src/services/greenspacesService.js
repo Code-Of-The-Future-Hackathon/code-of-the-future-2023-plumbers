@@ -26,7 +26,14 @@ export const getGreenspaces = async () => {
       })
     );
 
-    return areas;
+    return Object.entries(areas).map(([id, value]) => {
+      const newGeometry = value.geometry.map((coords) => ({
+        lat: coords.lat,
+        lng: coords.lon,
+      }));
+
+      return { ...value, id, geometry: newGeometry };
+    });
   } catch (error) {
     console.error("Error getting areas: ", error);
     return error;

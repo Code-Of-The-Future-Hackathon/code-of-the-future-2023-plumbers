@@ -30,17 +30,7 @@ const GoogleMaps = () => {
 
     try {
       const newGreenSpaces = await getGreenspaces();
-
-      setGreenSpaces(
-        Object.entries(newGreenSpaces).map(([id, value]) => {
-          const newGeometry = value.geometry.map((coords) => ({
-            lat: coords.lat,
-            lng: coords.lon,
-          }));
-
-          return { id, ...value, geometry: newGeometry };
-        })
-      );
+      setGreenSpaces(newGreenSpaces);
     } catch (error) {
       console.error(error);
     } finally {

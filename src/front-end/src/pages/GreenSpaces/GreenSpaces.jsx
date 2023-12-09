@@ -43,10 +43,7 @@ const GreenSpaces = () => {
 
     try {
       const newRecords = await getGreenspaces();
-
-      setRecords(
-        Object.entries(newRecords).map(([id, value]) => ({ ...value, id }))
-      );
+      setRecords(newRecords);
     } catch (error) {
       console.error(error);
     } finally {
