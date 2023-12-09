@@ -2,6 +2,7 @@ import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { memo, useCallback, useState } from "react";
 import Button from "@mui/material/Button";
 import { useDispatch, useSelector } from "react-redux";
+import { enqueueSnackbar } from "notistack";
 
 import { setSplitMapScreen } from "../../redux/splitMapScreenSlice";
 
@@ -44,6 +45,11 @@ const GoogleMaps = () => {
     >
       <Button variant="outlined" onClick={onClickGreenSpace}>
         Open Green Space
+      </Button>
+      <Button
+        onClick={() => enqueueSnackbar("Notify!", { variant: "warning" })}
+      >
+        Show snackbar
       </Button>
     </GoogleMap>
   ) : (
