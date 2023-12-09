@@ -1,10 +1,13 @@
-import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
-import { memo, useCallback, useState } from "react";
-import Button from "@mui/material/Button";
+import { GoogleMap, useJsApiLoader, Polygon } from "@react-google-maps/api";
+import { memo, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { enqueueSnackbar } from "notistack";
 
 import { setSplitMapScreen } from "../../redux/splitMapScreenSlice";
+import GreenSpacesSwitch from "./GreenSpacesSwitch";
+import { setIsLoading } from "../../redux/isLoadingSlice";
+import { getGreenspaces } from "../../services/greenspacesService";
+import { GREEN_SPACES_COLORS } from "../../constants";
+import { setActiveGreenSpace } from "../../redux/activeGreenSpaceSlice";
 
 const GoogleMaps = () => {
   const { isLoaded } = useJsApiLoader({
@@ -12,10 +15,36 @@ const GoogleMaps = () => {
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
   });
   const [map, setMap] = useState(null);
+  const [greenSpaces, setGreenSpaces] = useState([]);
+  const [visibleGreenSpaces, setVisibleGreenSpaces] = useState([]);
   const splitMapScreen = useSelector((state) => state.splitMapScreen);
   const mapZoomLevel = useSelector((state) => state.mapZoomLevel);
   const mapCenter = useSelector((state) => state.mapCenter);
+  const greenSpacesSwitch = useSelector((state) => state.greenSpacesSwitch);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    getNewGreenSpaces();
+  }, []);
+
+  useEffect(() => {
+    setVisibleGreenSpaces(
+      greenSpaces.filter((greenSpace) => greenSpacesSwitch[greenSpace.type])
+    );
+  }, [greenSpaces, greenSpacesSwitch]);
+
+  const getNewGreenSpaces = async () => {
+    dispatch(setIsLoading(true));
+
+    try {
+      const newGreenSpaces = await getGreenspaces();
+      setGreenSpaces(newGreenSpaces);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      dispatch(setIsLoading(false));
+    }
+  };
 
   const onLoad = useCallback(function callback(map) {
     const bounds = new window.google.maps.LatLngBounds(mapCenter);
@@ -28,8 +57,9 @@ const GoogleMaps = () => {
     setMap(null);
   }, []);
 
-  const onClickGreenSpace = () => {
+  const onGreenSpaceClick = (greenSpace) => {
     dispatch(setSplitMapScreen(true));
+    dispatch(setActiveGreenSpace(greenSpace));
   };
 
   return isLoaded ? (
@@ -43,14 +73,19 @@ const GoogleMaps = () => {
       onLoad={onLoad}
       onUnmount={onUnmount}
     >
-      <Button variant="outlined" onClick={onClickGreenSpace}>
-        Open Green Space
-      </Button>
-      <Button
-        onClick={() => enqueueSnackbar("Notify!", { variant: "warning" })}
-      >
-        Show snackbar
-      </Button>
+      <div style={{ width: "100%", display: "flex", justifyContent: "end" }}>
+        <GreenSpacesSwitch />
+      </div>
+      {visibleGreenSpaces.map((greenSpace) => (
+        <Polygon
+          key={greenSpace.id}
+          onClick={() => onGreenSpaceClick(greenSpace)}
+          paths={greenSpace.geometry}
+          options={{
+            fillColor: GREEN_SPACES_COLORS[greenSpace.type],
+          }}
+        />
+      ))}
     </GoogleMap>
   ) : (
     <></>
