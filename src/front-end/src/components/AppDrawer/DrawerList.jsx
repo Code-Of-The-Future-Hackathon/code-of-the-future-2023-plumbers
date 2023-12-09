@@ -9,6 +9,7 @@ import {
   Home,
   Leaderboard,
   Map,
+  Paid,
   Park,
 } from "@mui/icons-material";
 
@@ -37,6 +38,11 @@ const SCREENS = [
     name: "Tree Planter",
     url: "/tree-planter",
     icon: <Park />,
+  },
+  {
+    name: "Finance",
+    url: "/finance",
+    icon: <Paid />,
   },
 ];
 
