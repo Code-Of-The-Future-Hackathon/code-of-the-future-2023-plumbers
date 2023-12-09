@@ -5,6 +5,8 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 
+import { DRAWER_WIDTH } from "../constants";
+
 const CustomAppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
@@ -14,8 +16,8 @@ const CustomAppBar = styled(MuiAppBar, {
     duration: theme.transitions.duration.leavingScreen,
   }),
   ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: DRAWER_WIDTH,
+    width: `calc(100% - ${DRAWER_WIDTH}px)`,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -23,7 +25,7 @@ const CustomAppBar = styled(MuiAppBar, {
   }),
 }));
 
-const AppBar = () => {
+const AppBar = ({ open, handleDrawerOpen }) => {
   return (
     <CustomAppBar position="fixed" open={open}>
       <Toolbar>
