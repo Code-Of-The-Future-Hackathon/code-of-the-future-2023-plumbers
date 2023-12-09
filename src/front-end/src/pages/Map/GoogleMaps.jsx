@@ -1,14 +1,13 @@
 import { GoogleMap, useJsApiLoader, Polygon } from "@react-google-maps/api";
 import { memo, useCallback, useEffect, useState } from "react";
-import Button from "@mui/material/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { enqueueSnackbar } from "notistack";
 
 import { setSplitMapScreen } from "../../redux/splitMapScreenSlice";
 import GreenSpacesSwitch from "./GreenSpacesSwitch";
 import { setIsLoading } from "../../redux/isLoadingSlice";
 import { getGreenspaces } from "../../services/greenspacesService";
 import { GREEN_SPACES_COLORS } from "../../constants";
+import { setActiveGreenSpace } from "../../redux/activeGreenSpaceSlice";
 
 const GoogleMaps = () => {
   const { isLoaded } = useJsApiLoader({
@@ -58,12 +57,9 @@ const GoogleMaps = () => {
     setMap(null);
   }, []);
 
-  const onClickGreenSpace = () => {
-    dispatch(setSplitMapScreen(true));
-  };
-
   const onGreenSpaceClick = (greenSpace) => {
-    console.log(greenSpace);
+    dispatch(setSplitMapScreen(true));
+    dispatch(setActiveGreenSpace(greenSpace));
   };
 
   return isLoaded ? (
@@ -77,14 +73,6 @@ const GoogleMaps = () => {
       onLoad={onLoad}
       onUnmount={onUnmount}
     >
-      <Button variant="outlined" onClick={onClickGreenSpace}>
-        Open Green Space
-      </Button>
-      <Button
-        onClick={() => enqueueSnackbar("Notify!", { variant: "warning" })}
-      >
-        Show snackbar
-      </Button>
       <div style={{ width: "100%", display: "flex", justifyContent: "end" }}>
         <GreenSpacesSwitch />
       </div>
