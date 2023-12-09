@@ -12,7 +12,7 @@ import "./index.css";
 import Home from "./pages/Home/Home";
 import Map from "./pages/Map/Map";
 import store from "./redux/store";
-import AppDrawer from "./components/AppDrawer";
+import AppDrawer from "./components/AppDrawer/AppDrawer";
 
 const router = createBrowserRouter([
   {
