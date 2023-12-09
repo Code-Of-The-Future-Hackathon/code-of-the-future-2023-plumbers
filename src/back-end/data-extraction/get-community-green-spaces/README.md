@@ -9,13 +9,9 @@ gcloud functions deploy getCommunityGreenSpaces --runtime nodejs18 --trigger-htt
 Expects POST request with body structure like this:
 ```
 {
-  "name": "Sofia"
+  "name": "Burgas"
 }
 ```
 
-# Example Output:
-```
-[
-   TBD
-]
-```
+## Output
+Done! / Error ...
