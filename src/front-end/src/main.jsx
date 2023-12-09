@@ -10,13 +10,13 @@ import "@fontsource/roboto/700.css";
 import "./index.css";
 
 import store from "./redux/store";
-import AppDrawer from "./components/AppDrawer/AppDrawer";
+import App from "./App";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
-        <AppDrawer />
+        <App />
       </Provider>
     </BrowserRouter>
   </React.StrictMode>

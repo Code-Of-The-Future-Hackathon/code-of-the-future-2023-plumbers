@@ -25,17 +25,17 @@ const closedMixin = (theme) => ({
 });
 
 const CustomDrawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
+  shouldForwardProp: (prop) => prop !== "isDrawerOpen",
+})(({ theme, isDrawerOpen }) => ({
   width: DRAWER_WIDTH,
   flexShrink: 0,
   whiteSpace: "nowrap",
   boxSizing: "border-box",
-  ...(open && {
+  ...(isDrawerOpen && {
     ...openedMixin(theme),
     "& .MuiDrawer-paper": openedMixin(theme),
   }),
-  ...(!open && {
+  ...(!isDrawerOpen && {
     ...closedMixin(theme),
     "& .MuiDrawer-paper": closedMixin(theme),
   }),

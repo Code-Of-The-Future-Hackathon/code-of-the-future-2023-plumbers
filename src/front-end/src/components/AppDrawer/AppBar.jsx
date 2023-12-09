@@ -8,14 +8,14 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { DRAWER_WIDTH } from "../../constants";
 
 const CustomAppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
+  shouldForwardProp: (prop) => prop !== "isDrawerOpen",
+})(({ theme, isDrawerOpen }) => ({
   zIndex: theme.zIndex.drawer + 1,
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  ...(open && {
+  ...(isDrawerOpen && {
     marginLeft: DRAWER_WIDTH,
     width: `calc(100% - ${DRAWER_WIDTH}px)`,
     transition: theme.transitions.create(["width", "margin"], {
@@ -25,9 +25,9 @@ const CustomAppBar = styled(MuiAppBar, {
   }),
 }));
 
-const AppBar = ({ open, handleDrawerOpen }) => {
+const AppBar = ({ isDrawerOpen, handleDrawerOpen }) => {
   return (
-    <CustomAppBar position="fixed" open={open}>
+    <CustomAppBar position="fixed" isDrawerOpen={isDrawerOpen}>
       <Toolbar>
         <IconButton
           color="inherit"
@@ -36,7 +36,7 @@ const AppBar = ({ open, handleDrawerOpen }) => {
           edge="start"
           sx={{
             marginRight: 5,
-            ...(open && { display: "none" }),
+            ...(isDrawerOpen && { display: "none" }),
           }}
         >
           <MenuIcon />
