@@ -3,34 +3,40 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
 import { useNavigate } from "react-router-dom";
+import {
+  FormatShapes,
+  Home,
+  Leaderboard,
+  Map,
+  Park,
+} from "@mui/icons-material";
 
 const SCREENS = [
   {
     name: "Home",
     url: "/",
-    icon: <InboxIcon />,
+    icon: <Home />,
   },
   {
     name: "Map",
     url: "/map",
-    icon: <InboxIcon />,
+    icon: <Map />,
   },
   {
     name: "Analysis",
     url: "/analysis",
-    icon: <InboxIcon />,
+    icon: <Leaderboard />,
   },
   {
     name: "Green Spaces",
     url: "/green-spaces",
-    icon: <InboxIcon />,
+    icon: <FormatShapes />,
   },
   {
     name: "Tree Planter",
     url: "/tree-planter",
-    icon: <InboxIcon />,
+    icon: <Park />,
   },
 ];
 
