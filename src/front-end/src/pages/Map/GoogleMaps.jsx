@@ -91,6 +91,7 @@ const GoogleMaps = () => {
       </div>
       {greenSpaces.map((greenSpace) => (
         <Polygon
+          key={greenSpace.id}
           onClick={() => onGreenSpaceClick(greenSpace)}
           paths={greenSpace.geometry}
           // options={{
