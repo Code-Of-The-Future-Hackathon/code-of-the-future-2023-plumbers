@@ -1,10 +1,9 @@
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { memo, useCallback, useState } from "react";
+import Button from "@mui/material/Button";
+import { useDispatch, useSelector } from "react-redux";
 
-const containerStyle = {
-  width: "100%",
-  height: "91vh",
-};
+import { setSplitMapScreen } from "../../redux/splitMapScreenSlice";
 
 const center = {
   lat: -3.745,
@@ -16,8 +15,9 @@ const Map = () => {
     id: "google-map-script",
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
   });
-
   const [map, setMap] = useState(null);
+  const splitMapScreen = useSelector((state) => state.splitMapScreen);
+  const dispatch = useDispatch();
 
   const onLoad = useCallback(function callback(map) {
     const bounds = new window.google.maps.LatLngBounds(center);
@@ -30,16 +30,24 @@ const Map = () => {
     setMap(null);
   }, []);
 
+  const onClickGreenSpace = () => {
+    dispatch(setSplitMapScreen(true));
+  };
+
   return isLoaded ? (
     <GoogleMap
-      mapContainerStyle={containerStyle}
+      mapContainerStyle={{
+        width: splitMapScreen ? "50%" : "100%",
+        height: "91vh",
+      }}
       center={center}
       zoom={10}
       onLoad={onLoad}
       onUnmount={onUnmount}
     >
-      {/* Child components, such as markers, info windows, etc. */}
-      <></>
+      <Button variant="outlined" onClick={onClickGreenSpace}>
+        Open Green Space
+      </Button>
     </GoogleMap>
   ) : (
     <></>
