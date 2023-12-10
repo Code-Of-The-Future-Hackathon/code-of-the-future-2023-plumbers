@@ -1,0 +1,35 @@
+{
+  "name": "getCommunityGreenSpaces",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Garbage-in-data-out/firestore-bundles.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "firebase-admin": "^11.11.0",
+    "firebase-functions": "^4.5.0"
+  },
+  "devDependencies": {
+    "firebase-functions-test": "^3.1.0"
+  },
+  "bugs": {
+    "url": "https://github.com/Garbage-in-data-out/firestore-bundles/issues"
+  },
+  "homepage": "https://github.com/Garbage-in-data-out/firestore-bundles#readme"
+}
