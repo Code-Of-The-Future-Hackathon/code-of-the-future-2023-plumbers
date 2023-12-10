@@ -5,8 +5,8 @@ import GreenStatsCards from "./GreenStatsCards";
 
 const Home = () => {
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <GreenPlacesCarousel />
+    <Box data-testid="home-container" sx={{ flexGrow: 1 }}>
+      <GreenPlacesCarousel data-testid="green-places-carousel" />
       <Stack direction={"row"} marginTop={"5%"}>
         <GreenStatsCards
           sumValue={69895}
