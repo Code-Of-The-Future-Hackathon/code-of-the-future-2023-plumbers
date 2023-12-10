@@ -5,34 +5,34 @@ import GreenStatsCards from "./GreenStatsCards";
 
 const Home = () => {
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <Stack direction={"row"}>
+    <Box data-testid="home-container" sx={{ flexGrow: 1 }}>
+      <GreenPlacesCarousel data-testid="green-places-carousel" />
+      <Stack direction={"row"} marginTop={"5%"}>
         <GreenStatsCards
-          sumValue={30}
-          value={10}
-          chartLabel={"Concrete area"}
-          count={100}
-          element={"Dog Parks"}
-          secondLabel={"Grass"}
+          sumValue={69895}
+          value={15632}
+          chartLabel={"Concrete area sq/m"}
+          count={4398}
+          element={"Benches"}
+          secondLabel={"Grass sq/m"}
         ></GreenStatsCards>
         <GreenStatsCards
-          sumValue={30}
-          value={10}
-          chartLabel={"trees"}
-          count={100}
-          element={"Dog Parks"}
-          secondLabel={"Shrubs"}
+          sumValue={30765}
+          value={8765}
+          chartLabel={"Trees sq/m"}
+          count={674}
+          element={"Water Fontains"}
+          secondLabel={"Shrubs sq/m"}
         ></GreenStatsCards>
         <GreenStatsCards
-          sumValue={30}
-          value={10}
+          sumValue={160}
+          value={74}
           chartLabel={"Playgrounds"}
-          count={100}
+          count={21}
           element={"Dog Parks"}
           secondLabel={"Water fountains"}
         ></GreenStatsCards>
       </Stack>
-      <GreenPlacesCarousel />
     </Box>
   );
 };

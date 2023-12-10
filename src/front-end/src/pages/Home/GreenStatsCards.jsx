@@ -10,6 +10,14 @@ const GreenStatsCards = ({
   sumValue,
   secondLabel,
 }) => {
+  const customIcon =
+    element === "Benches"
+      ? "icons/bench.png"
+      : element === "Water Fontains"
+      ? "/icons/fontain-icon.png"
+      : element === "Dog Parks"
+      ? "/icons/dog-park.png"
+      : "icons/park-icon.png";
   return (
     <Grid container>
       <Grid item xs={12}>
@@ -22,9 +30,9 @@ const GreenStatsCards = ({
                 flexDirection="column"
                 justifyContent="center"
                 alignItems="center"
-                height="200px"
+                height="250px"
               >
-                <Typography variant="h6" gutterBottom textAlign="center">
+                <Typography variant="h7" textAlign="center">
                   {chartLabel + "/" + secondLabel}
                 </Typography>
                 <PieChartSmall
@@ -41,7 +49,14 @@ const GreenStatsCards = ({
                 justifyContent="center"
                 alignItems="center"
               >
-                <Typography variant="h5">{element}</Typography>
+                <img
+                  src={customIcon}
+                  alt="Icon"
+                  style={{ marginRight: "5px", width: "64px" }}
+                />
+                <Typography variant="h5" alignItems={"center"}>
+                  {element}
+                </Typography>
                 <Typography variant="h4" color="primary">
                   {count}
                 </Typography>
