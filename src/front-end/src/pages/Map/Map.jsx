@@ -67,7 +67,7 @@ const Map = () => {
             width={"100%"}
           >
             <Typography variant="h6">
-              Name of greenspace:
+              Name of greenspace:{" "}
               {isEditing ? (
                 <TextField
                   value={name || "empty"}
