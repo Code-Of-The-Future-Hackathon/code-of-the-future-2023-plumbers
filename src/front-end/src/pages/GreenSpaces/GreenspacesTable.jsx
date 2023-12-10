@@ -17,16 +17,6 @@ const GreenspacesTable = ({ records }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const rows = records.map((record) => {
-    return {
-      id: record.id,
-      name: record.name,
-      area: record.area,
-      type: record.type,
-      zone: record.zone,
-    };
-  });
-
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -80,10 +70,10 @@ const GreenspacesTable = ({ records }) => {
             order={order}
             orderBy={orderBy}
             onRequestSort={handleRequestSort}
-            rowCount={rows.length}
+            rowCount={records.length}
           />
           <TableBody>
-            {stableSort(rows, getComparator(order, orderBy))
+            {stableSort(records, getComparator(order, orderBy))
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row, index) => (
                 <GreenspacesRow key={row.id} record={row} />
@@ -94,7 +84,7 @@ const GreenspacesTable = ({ records }) => {
       <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={rows.length}
+        count={records.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
