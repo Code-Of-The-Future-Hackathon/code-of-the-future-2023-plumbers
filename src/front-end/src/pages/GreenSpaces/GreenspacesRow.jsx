@@ -63,9 +63,9 @@ const GreenspacesRow = ({ record }) => {
         },
       }}
     >
-      <TableCell>{record.name}</TableCell>
+      <TableCell>{record.name || "-"}</TableCell>
       <TableCell>{record?.zone?.area?.toFixed(3) || "-"}</TableCell>
-      <TableCell>{record.type}</TableCell>
+      <TableCell>{record.type || "-"}</TableCell>
       <TableCell>
         <IconButton onClick={onZoneIconClick}>
           <Visibility />
