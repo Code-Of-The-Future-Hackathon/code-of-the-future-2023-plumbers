@@ -1,8 +1,39 @@
+import React from "react";
+import { Box, Stack } from "@mui/material";
+import GreenPlacesCarousel from "./GreenPlacesCarousel";
+import GreenStatsCards from "./GreenStatsCards";
+
 const Home = () => {
   return (
-    <div>
-      <h1>Home</h1>
-    </div>
+    <Box sx={{ flexGrow: 1 }}>
+      <Stack direction={"row"}>
+        <GreenStatsCards
+          sumValue={30}
+          value={10}
+          chartLabel={"Concrete area"}
+          count={100}
+          element={"Dog Parks"}
+          secondLabel={"Grass"}
+        ></GreenStatsCards>
+        <GreenStatsCards
+          sumValue={30}
+          value={10}
+          chartLabel={"trees"}
+          count={100}
+          element={"Dog Parks"}
+          secondLabel={"bushes"}
+        ></GreenStatsCards>
+        <GreenStatsCards
+          sumValue={30}
+          value={10}
+          chartLabel={"Playgrounds"}
+          count={100}
+          element={"Dog Parks"}
+          secondLabel={"Water fountains"}
+        ></GreenStatsCards>
+      </Stack>
+      <GreenPlacesCarousel />
+    </Box>
   );
 };
 
