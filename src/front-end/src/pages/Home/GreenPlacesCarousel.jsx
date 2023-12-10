@@ -27,11 +27,11 @@ const GreenPlacesCarousel = () => {
   return (
     <Carousel>
       {items.map((item, i) => (
-        <Paper key={i} style={{ position: "relative", height: "400px" }}>
+        <Paper key={i} style={{ position: "relative", height: "600px" }}>
           <img
             src={item.imgSrc}
             alt={item.name}
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            style={{ width: "100%", objectFit: "cover" }}
           />
           <Box
             style={{
