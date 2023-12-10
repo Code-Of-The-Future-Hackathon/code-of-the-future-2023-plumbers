@@ -21,3 +21,9 @@ export const GREEN_SPACES_SIZES = {
   medium: true,
   large: true,
 };
+
+export const GREEN_SPACES_SIZES_VALUES = {
+  small: 0.01,
+  medium: 0.1,
+  large: 1,
+};

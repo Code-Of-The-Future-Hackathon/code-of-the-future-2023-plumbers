@@ -8,6 +8,7 @@ import { setIsLoading } from "../../redux/isLoadingSlice";
 import { setSplitMapScreen } from "../../redux/splitMapScreenSlice";
 import { setActiveGreenSpace } from "../../redux/activeGreenSpaceSlice";
 import { setZoomLevel } from "../../redux/mapZoomLevelSlice";
+import { getGreenSpaceSizeResult } from "../../utils";
 
 const GreenspacesRow = ({ record }) => {
   const dispatch = useDispatch();
@@ -66,7 +67,8 @@ const GreenspacesRow = ({ record }) => {
     >
       <TableCell>{record.name || "-"}</TableCell>
       <TableCell>
-        {record?.details?.areaInSquareKms?.toFixed(5) || "-"}
+        {record?.details?.areaInSquareKms?.toFixed(5) || "-"}:{" "}
+        {getGreenSpaceSizeResult(record?.details?.areaInSquareKms || 0)}
       </TableCell>
       <TableCell>{record.type || "-"}</TableCell>
       <TableCell>
