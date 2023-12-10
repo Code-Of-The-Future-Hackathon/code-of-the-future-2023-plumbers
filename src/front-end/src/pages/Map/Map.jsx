@@ -22,10 +22,12 @@ const Map = () => {
 
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState("");
+
   useEffect(() => {
     if (!activeGreenSpace) return;
     setName(activeGreenSpace.name);
-  });
+  }, [activeGreenSpace]);
+
   const onBackButtonClick = () => {
     dispatch(setSplitMapScreen(false));
     dispatch(setActiveGreenSpace(null));
@@ -47,7 +49,7 @@ const Map = () => {
         activeGreenSpace.type,
         activeGreenSpace.id
       );
-
+      dispatch(setActiveGreenSpace({ ...activeGreenSpace, name }));
       setIsEditing(false);
     }
   };
