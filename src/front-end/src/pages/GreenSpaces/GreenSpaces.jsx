@@ -8,31 +8,7 @@ import { getGreenspaces } from "../../services/greenspacesService";
 
 const GreenSpaces = () => {
   const [records, setRecords] = useState([]);
-  const [filterName, setFilterName] = useState("");
-  const [filterArea, setFilterArea] = useState("");
-  const [filterCategory, setFilterCategory] = useState("");
-
   const dispatch = useDispatch();
-
-  const nameMatches = (record, filterName) =>
-    !filterName || record.name.includes(filterName);
-
-  const areaMatches = (record, filterArea) =>
-    !filterArea ||
-    (record.area && record.area.toString().includes(filterArea.toString()));
-
-  const categoryMatches = (record, filterCategory) =>
-    !filterCategory || record.category === filterCategory;
-
-  const groupMatches = (record, selectedGroup) =>
-    !selectedGroup || record.group === selectedGroup;
-
-  const filteredRecords = records.filter(
-    (record) =>
-      nameMatches(record, filterName) &&
-      areaMatches(record, filterArea) &&
-      categoryMatches(record, filterCategory)
-  );
 
   useEffect(() => {
     getNewRecords();
