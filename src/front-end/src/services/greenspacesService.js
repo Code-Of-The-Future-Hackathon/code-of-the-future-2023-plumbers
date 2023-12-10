@@ -1,4 +1,10 @@
-import { collection, getDocs, getFirestore } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  getFirestore,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 
 import { app } from "../../firebaseConfig";
 import { GREEN_SPACES_COLORS } from "../constants";
@@ -59,4 +65,20 @@ const getCleaningTypes = async (docRef) => {
   });
 
   return cleaning;
+};
+
+export const updateGreenSpaceName = async (newName, spaceType, spaceId) => {
+  const greenSpaceRef = doc(
+    dbCloudFirestore,
+    `towns/Burgas/${spaceType}/${spaceId}`
+  );
+
+  try {
+    await updateDoc(greenSpaceRef, {
+      name: newName,
+    });
+    console.log("Green space name updated successfully");
+  } catch (error) {
+    console.error("Error updating green space name:", error);
+  }
 };

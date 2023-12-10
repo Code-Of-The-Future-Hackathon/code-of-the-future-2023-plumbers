@@ -1,20 +1,57 @@
-import { memo } from "react";
+import React, { useState, memo, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Stack, Typography, Divider, Button } from "@mui/material";
-
+import {
+  Stack,
+  Typography,
+  Divider,
+  Button,
+  TextField,
+  IconButton,
+} from "@mui/material";
+import { ArrowBackIos, Edit } from "@mui/icons-material";
+import EditIcon from "@mui/icons-material/Edit";
 import GoogleMaps from "./GoogleMaps";
-import { ArrowBackIos } from "@mui/icons-material";
 import { setSplitMapScreen } from "../../redux/splitMapScreenSlice";
 import { setActiveGreenSpace } from "../../redux/activeGreenSpaceSlice";
+import { updateGreenSpaceName } from "../../services/greenspacesService";
 
 const Map = () => {
   const splitMapScreen = useSelector((state) => state.splitMapScreen);
   const activeGreenSpace = useSelector((state) => state.activeGreenSpace);
   const dispatch = useDispatch();
 
+  const [isEditing, setIsEditing] = useState(false);
+  const [name, setName] = useState("");
+
+  useEffect(() => {
+    if (!activeGreenSpace) return;
+    setName(activeGreenSpace.name);
+  }, [activeGreenSpace]);
+
   const onBackButtonClick = () => {
     dispatch(setSplitMapScreen(false));
     dispatch(setActiveGreenSpace(null));
+  };
+
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleNameChange = (event) => {
+    setName(event.target.value);
+  };
+
+  const handleNameUpdate = async () => {
+    if (activeGreenSpace && name !== activeGreenSpace.name) {
+      console.log(activeGreenSpace.type, activeGreenSpace.id);
+      await updateGreenSpaceName(
+        name,
+        activeGreenSpace.type,
+        activeGreenSpace.id
+      );
+      dispatch(setActiveGreenSpace({ ...activeGreenSpace, name }));
+      setIsEditing(false);
+    }
   };
 
   return (
@@ -30,7 +67,23 @@ const Map = () => {
             width={"100%"}
           >
             <Typography variant="h6">
-              Име: <strong>{activeGreenSpace.name || "няма"}</strong>
+              Name of greenspace:
+              {isEditing ? (
+                <TextField
+                  value={name || "empty"}
+                  onChange={handleNameChange}
+                  onBlur={handleNameUpdate}
+                />
+              ) : (
+                <>
+                  <strong>{name || "няма"}</strong>
+                  {!name && (
+                    <IconButton onClick={handleEditClick}>
+                      <EditIcon />
+                    </IconButton>
+                  )}
+                </>
+              )}
             </Typography>
             <Button
               variant="contained"
@@ -38,12 +91,13 @@ const Map = () => {
               color="error"
               onClick={onBackButtonClick}
             >
-              Назад
+              Back
             </Button>
           </Stack>
           <Divider />
           <Typography variant="h6">
-            Тип: <strong>{activeGreenSpace.type || "няма"}</strong>
+            Type of greenspace:{" "}
+            <strong>{activeGreenSpace.type || "няма"}</strong>
           </Typography>
         </Stack>
       )}
