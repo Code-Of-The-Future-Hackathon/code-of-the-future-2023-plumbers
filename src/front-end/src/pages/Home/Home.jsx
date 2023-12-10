@@ -21,7 +21,7 @@ const Home = () => {
           chartLabel={"trees"}
           count={100}
           element={"Dog Parks"}
-          secondLabel={"bushes"}
+          secondLabel={"Shrubs"}
         ></GreenStatsCards>
         <GreenStatsCards
           sumValue={30}
