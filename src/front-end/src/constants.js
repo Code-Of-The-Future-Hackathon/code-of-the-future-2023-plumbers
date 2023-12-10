@@ -15,3 +15,9 @@ export const GREEN_SPACES_AVAILABLE = Object.keys(GREEN_SPACES_COLORS).reduce(
   },
   {}
 );
+
+export const GREEN_SPACES_SIZES = {
+  small: true,
+  medium: true,
+  large: true,
+};
