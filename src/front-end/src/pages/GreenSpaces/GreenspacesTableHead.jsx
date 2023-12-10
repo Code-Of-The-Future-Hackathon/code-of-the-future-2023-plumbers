@@ -5,7 +5,6 @@ import {
   TableRow,
   TableSortLabel,
 } from "@mui/material";
-import { visuallyHidden } from "@mui/utils";
 
 const headCells = [
   { id: "name", numeric: false, disablePadding: true, label: "Name" },
@@ -35,11 +34,7 @@ const GreenspacesTableHead = ({ order, orderBy, onRequestSort }) => {
               onClick={createSortHandler(headCell.id)}
             >
               {headCell.label}
-              {orderBy === headCell.id ? (
-                <Box component="span" sx={visuallyHidden}>
-                  {order === "desc" ? "sorted descending" : "sorted ascending"}
-                </Box>
-              ) : null}
+              {orderBy === headCell.id ? <Box component="span" /> : null}
             </TableSortLabel>
           </TableCell>
         ))}

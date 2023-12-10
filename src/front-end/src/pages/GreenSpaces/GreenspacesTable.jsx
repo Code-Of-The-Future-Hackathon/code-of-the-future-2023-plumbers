@@ -11,13 +11,6 @@ import {
 import GreenspacesRow from "./GreenspacesRow";
 import GreenspacesTableHead from "./GreenspacesTableHead";
 
-const headCells = [
-  { id: "name", numeric: false, disablePadding: true, label: "Name" },
-  { id: "area", numeric: true, disablePadding: false, label: "Area (sq. m.)" },
-  { id: "type", numeric: false, disablePadding: false, label: "Type" },
-  { id: "zone", numeric: false, disablePadding: false, label: "Zone" },
-];
-
 const GreenspacesTable = ({ records }) => {
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("name");
