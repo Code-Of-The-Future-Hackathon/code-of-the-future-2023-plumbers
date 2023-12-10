@@ -1,7 +1,5 @@
 import { IconButton, TableCell, TableRow } from "@mui/material";
-
-import { FormatShapes, ModeEdit } from "@mui/icons-material";
-
+import { Visibility } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 
@@ -61,21 +59,16 @@ const GreenspacesRow = ({ record }) => {
     <TableRow
       sx={{
         "&:hover": {
-          backgroundColor: "#e6faf2",
+          backgroundColor: "#e3f2fd",
         },
       }}
     >
       <TableCell>{record.name}</TableCell>
-      <TableCell>{record.area}</TableCell>
       <TableCell>{record?.zone?.area?.toFixed(3) || "-"}</TableCell>
-      <TableCell>{record.category}</TableCell>
-      <TableCell align="center">
+      <TableCell>{record.type}</TableCell>
+      <TableCell>
         <IconButton onClick={onZoneIconClick}>
-          {record.zone ? (
-            <FormatShapes sx={{ color: "#10b981" }} />
-          ) : (
-            <ModeEdit sx={{ color: "#FD904D" }} />
-          )}
+          <Visibility />
         </IconButton>
       </TableCell>
     </TableRow>
