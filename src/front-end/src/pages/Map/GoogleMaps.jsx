@@ -1,4 +1,9 @@
-import { GoogleMap, useJsApiLoader, Polygon } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  useJsApiLoader,
+  Polygon,
+  Polyline,
+} from "@react-google-maps/api";
 import { memo, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -21,6 +26,7 @@ const GoogleMaps = () => {
   const mapZoomLevel = useSelector((state) => state.mapZoomLevel);
   const mapCenter = useSelector((state) => state.mapCenter);
   const greenSpacesSwitch = useSelector((state) => state.greenSpacesSwitch);
+  const activeGreenSpace = useSelector((state) => state.activeGreenSpace);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -86,6 +92,19 @@ const GoogleMaps = () => {
           }}
         />
       ))}
+      {activeGreenSpace && activeGreenSpace.details && (
+        <Polyline
+          path={activeGreenSpace.details.alleys.map((alley) => ({
+            lat: alley.lat,
+            lng: alley.lon,
+          }))}
+          options={{
+            strokeColor: "red",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+          }}
+        />
+      )}
     </GoogleMap>
   ) : (
     <></>
