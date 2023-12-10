@@ -1,9 +1,16 @@
-import { memo } from "react";
+import React, { useState, memo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Stack, Typography, Divider, Button } from "@mui/material";
-
+import {
+  Stack,
+  Typography,
+  Divider,
+  Button,
+  TextField,
+  IconButton,
+} from "@mui/material";
+import { ArrowBackIos, Edit } from "@mui/icons-material";
+import EditIcon from "@mui/icons-material/Edit";
 import GoogleMaps from "./GoogleMaps";
-import { ArrowBackIos } from "@mui/icons-material";
 import { setSplitMapScreen } from "../../redux/splitMapScreenSlice";
 import { setActiveGreenSpace } from "../../redux/activeGreenSpaceSlice";
 
@@ -12,9 +19,20 @@ const Map = () => {
   const activeGreenSpace = useSelector((state) => state.activeGreenSpace);
   const dispatch = useDispatch();
 
+  const [isEditing, setIsEditing] = useState(false);
+  const [name, setName] = useState(activeGreenSpace.name);
+
   const onBackButtonClick = () => {
     dispatch(setSplitMapScreen(false));
     dispatch(setActiveGreenSpace(null));
+  };
+
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleNameChange = (event) => {
+    setName(event.target.value);
   };
 
   return (
@@ -30,7 +48,23 @@ const Map = () => {
             width={"100%"}
           >
             <Typography variant="h6">
-              Име: <strong>{activeGreenSpace.name || "няма"}</strong>
+              Name of greenspace:
+              {isEditing ? (
+                <TextField
+                  value={name}
+                  onChange={handleNameChange}
+                  onBlur={() => setIsEditing(false)}
+                />
+              ) : (
+                <>
+                  <strong>{name || "няма"}</strong>
+                  {!name && (
+                    <IconButton onClick={handleEditClick}>
+                      <EditIcon />
+                    </IconButton>
+                  )}
+                </>
+              )}
             </Typography>
             <Button
               variant="contained"
@@ -38,7 +72,7 @@ const Map = () => {
               color="error"
               onClick={onBackButtonClick}
             >
-              Назад
+              Back
             </Button>
           </Stack>
           <Divider />
