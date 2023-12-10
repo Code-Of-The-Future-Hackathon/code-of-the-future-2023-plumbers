@@ -6,12 +6,13 @@ import GreenspacesTable from "./GreenspacesTable";
 import { setIsLoading } from "../../redux/isLoadingSlice";
 import { getGreenspaces } from "../../services/greenspacesService";
 import GreenSpacesTypes from "./GreenSpacesTypes";
-import { GREEN_SPACES_AVAILABLE } from "../../constants";
+import { GREEN_SPACES_AVAILABLE, GREEN_SPACES_SIZES } from "../../constants";
 
 const GreenSpaces = () => {
   const [records, setRecords] = useState([]);
   const [visibleRecords, setVisibleRecords] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState(GREEN_SPACES_AVAILABLE);
+  const [selectedSizes, setSelectedSizes] = useState(GREEN_SPACES_SIZES);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -57,6 +58,8 @@ const GreenSpaces = () => {
       <GreenSpacesTypes
         selectedTypes={selectedTypes}
         setSelectedTypes={setSelectedTypes}
+        selectedSizes={selectedSizes}
+        setSelectedSizes={setSelectedSizes}
       />
       <GreenspacesTable records={visibleRecords} />
     </Stack>
