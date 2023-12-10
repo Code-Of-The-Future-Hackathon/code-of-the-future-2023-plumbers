@@ -7,6 +7,7 @@ import {
   Button,
   TextField,
   IconButton,
+  Checkbox,
 } from "@mui/material";
 import { ArrowBackIos, Edit } from "@mui/icons-material";
 import EditIcon from "@mui/icons-material/Edit";
@@ -15,14 +16,35 @@ import { setSplitMapScreen } from "../../redux/splitMapScreenSlice";
 import { setActiveGreenSpace } from "../../redux/activeGreenSpaceSlice";
 import { updateGreenSpaceName } from "../../services/greenspacesService";
 
+const icons = [
+  "alley-icon.png",
+  "bench.png",
+  "dog-park.png",
+  "fountain-icon.png",
+  "garden.png",
+  "park-icon.png",
+  "pruning-and-trimming.png",
+  "street-lamp.png",
+  "tree.png",
+  "watering-plants.png",
+  "weed-removal.png",
+];
+
 const Map = () => {
   const splitMapScreen = useSelector((state) => state.splitMapScreen);
   const activeGreenSpace = useSelector((state) => state.activeGreenSpace);
   const dispatch = useDispatch();
-
+  console.log(activeGreenSpace);
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState("");
+  const [selectedActions, setSelectedActions] = useState({});
 
+  const handleCheckboxChange = (iconName) => {
+    setSelectedActions((prevState) => ({
+      ...prevState,
+      [iconName]: !prevState[iconName],
+    }));
+  };
   useEffect(() => {
     if (!activeGreenSpace) return;
     setName(activeGreenSpace.name);
@@ -99,6 +121,33 @@ const Map = () => {
             Type of greenspace:{" "}
             <strong>{activeGreenSpace.type || "няма"}</strong>
           </Typography>
+          <Divider />
+          <Typography variant="h6">Actions in Greenspace:</Typography>
+          <Stack spacing={2}>
+            {icons.map((icon) => (
+              <Stack
+                key={icon}
+                direction="row"
+                alignItems="center"
+                spacing={1}
+                width={"200px"}
+                justifyContent={"space-between"}
+              >
+                <img
+                  src={`/icons/${icon}`}
+                  alt={icon}
+                  style={{ width: "24px", height: "24px" }}
+                />
+                <Typography>
+                  {icon.replace(/[-_\.]/g, " ").replace(/\.\w+$/, "")}
+                </Typography>
+                <Checkbox
+                  checked={selectedActions[icon] || false}
+                  onChange={() => handleCheckboxChange(icon)}
+                />
+              </Stack>
+            ))}
+          </Stack>
         </Stack>
       )}
     </div>
