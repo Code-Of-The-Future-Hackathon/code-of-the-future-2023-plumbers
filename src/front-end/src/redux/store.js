@@ -5,7 +5,6 @@ import splitMapScreenReducer from "./splitMapScreenSlice.js";
 import mapCenterReducer from "./mapCenterSlice.js";
 import isLoadingReducer from "./isLoadingSlice.js";
 import greenSpacesSwitchReducer from "./greenSpacesSwitchSlice.js";
-import greenspacesReducer from "./greenspaces.js";
 import activeGreenSpaceReducer from "./activeGreenSpaceSlice.js";
 
 export default configureStore({
@@ -15,7 +14,6 @@ export default configureStore({
     mapCenter: mapCenterReducer,
     isLoading: isLoadingReducer,
     greenSpacesSwitch: greenSpacesSwitchReducer,
-    greenspaces: greenspacesReducer,
     activeGreenSpace: activeGreenSpaceReducer,
   },
 });

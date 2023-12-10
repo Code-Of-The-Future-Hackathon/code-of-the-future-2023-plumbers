@@ -57,16 +57,12 @@ const GreenSpaces = () => {
       spacing={2}
       sx={{
         margin: "5rem 2rem",
-        width: "100%",
         padding: "8px 16px",
       }}
       alignItems={"center"}
       justifyContent={"center"}
     >
-      <GreenspacesTable
-        records={records}
-        getNewRecords={getNewRecords}
-      ></GreenspacesTable>
+      <GreenspacesTable records={records} />
     </Stack>
   );
 };
