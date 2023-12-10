@@ -1,4 +1,4 @@
-import React, { useState, memo } from "react";
+import React, { useState, memo, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   Stack,
@@ -13,6 +13,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import GoogleMaps from "./GoogleMaps";
 import { setSplitMapScreen } from "../../redux/splitMapScreenSlice";
 import { setActiveGreenSpace } from "../../redux/activeGreenSpaceSlice";
+import { updateGreenSpaceName } from "../../services/greenspacesService";
 
 const Map = () => {
   const splitMapScreen = useSelector((state) => state.splitMapScreen);
@@ -20,8 +21,11 @@ const Map = () => {
   const dispatch = useDispatch();
 
   const [isEditing, setIsEditing] = useState(false);
-  const [name, setName] = useState(activeGreenSpace.name);
-
+  const [name, setName] = useState("");
+  useEffect(() => {
+    if (!activeGreenSpace) return;
+    setName(activeGreenSpace.name);
+  });
   const onBackButtonClick = () => {
     dispatch(setSplitMapScreen(false));
     dispatch(setActiveGreenSpace(null));
@@ -33,6 +37,19 @@ const Map = () => {
 
   const handleNameChange = (event) => {
     setName(event.target.value);
+  };
+
+  const handleNameUpdate = async () => {
+    if (activeGreenSpace && name !== activeGreenSpace.name) {
+      console.log(activeGreenSpace.type, activeGreenSpace.id);
+      await updateGreenSpaceName(
+        name,
+        activeGreenSpace.type,
+        activeGreenSpace.id
+      );
+
+      setIsEditing(false);
+    }
   };
 
   return (
@@ -51,9 +68,9 @@ const Map = () => {
               Name of greenspace:
               {isEditing ? (
                 <TextField
-                  value={name}
+                  value={name || "empty"}
                   onChange={handleNameChange}
-                  onBlur={() => setIsEditing(false)}
+                  onBlur={handleNameUpdate}
                 />
               ) : (
                 <>
@@ -77,7 +94,8 @@ const Map = () => {
           </Stack>
           <Divider />
           <Typography variant="h6">
-            Тип: <strong>{activeGreenSpace.type || "няма"}</strong>
+            Type of greenspace:{" "}
+            <strong>{activeGreenSpace.type || "няма"}</strong>
           </Typography>
         </Stack>
       )}
