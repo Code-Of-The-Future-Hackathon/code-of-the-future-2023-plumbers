@@ -5,6 +5,9 @@ import { useNavigate } from "react-router";
 
 import { setMapCenter } from "../../redux/mapCenterSlice";
 import { setIsLoading } from "../../redux/isLoadingSlice";
+import { setSplitMapScreen } from "../../redux/splitMapScreenSlice";
+import { setActiveGreenSpace } from "../../redux/activeGreenSpaceSlice";
+import { setZoomLevel } from "../../redux/mapZoomLevelSlice";
 
 const GreenspacesRow = ({ record }) => {
   const dispatch = useDispatch();
@@ -13,46 +16,44 @@ const GreenspacesRow = ({ record }) => {
   const onZoneIconClick = async () => {
     dispatch(setIsLoading(true));
 
-    if (record.zone) {
-      const center = {
-        lat: record.zone.points[0].lat,
-        lng: record.zone.points[0].lng,
-      };
+    const center = {
+      lat: record.geometry[0].lat,
+      lng: record.geometry[0].lon,
+    };
 
-      const zonePointsBody = record.zone.points.map((point) => ({
-        Lat: point.lat,
-        Lng: point.lng,
-      }));
+    const zonePointsBody = record.geometry.map((point) => ({
+      Lat: point.lat,
+      Lng: point.lng,
+    }));
 
-      try {
-        const response = await fetch(
-          `https://europe-west1-bins-to-owners-332bc.cloudfunctions.net/getZoneCenter`,
-          {
-            method: "POST",
-            body: JSON.stringify({
-              ZonePoints: zonePointsBody,
-            }),
-          }
-        );
-
-        const resultCenter = await response.json();
-
-        if (resultCenter) {
-          center.lat = resultCenter.Lat;
-          center.lng = resultCenter.Lng;
+    try {
+      const response = await fetch(
+        `https://europe-west1-bins-to-owners-332bc.cloudfunctions.net/getZoneCenter`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            ZonePoints: zonePointsBody,
+          }),
         }
-      } catch (error) {
-        console.error(error);
-      } finally {
-        dispatch(setIsLoading(false));
+      );
+
+      const resultCenter = await response.json();
+
+      if (resultCenter) {
+        center.lat = resultCenter.Lat;
+        center.lng = resultCenter.Lng;
       }
 
       dispatch(setMapCenter(center));
-      dispatch(setMapZoomLevel(20));
+      dispatch(setZoomLevel(20));
+      dispatch(setSplitMapScreen(true));
+      dispatch(setActiveGreenSpace(record));
+      navigate("/map");
+    } catch (error) {
+      console.error(error);
+    } finally {
+      dispatch(setIsLoading(false));
     }
-
-    dispatch(setGreenspaces([record]));
-    navigate("/");
   };
 
   return (
