@@ -1,3 +1,5 @@
+const greenSpaceService = require("./detailsService/services/greenSpaceService");
+
 async function isCommunityDataUploadedAsync(db, communityName) {
   const doc = await db.collection("towns").doc(communityName).get();
 
@@ -5,12 +7,25 @@ async function isCommunityDataUploadedAsync(db, communityName) {
 }
 
 function uploadGreenSpacesAsync(db, communityName, type, data) {
-  const greenSpaceOfTypeRef = db
+  const greenSpacesOfTypeRef = db
     .collection("towns")
     .doc(communityName)
     .collection(type);
 
-  return Promise.all(data.map((x) => greenSpaceOfTypeRef.doc().set(x)));
+  return Promise.all(
+    data.map(async (x) => {
+      const greenSpaceOfTypeRef = greenSpacesOfTypeRef.doc();
+      await greenSpaceOfTypeRef.set(x);
+      try {
+        await greenSpaceService.getGreenSpaceDetailsAsync(
+          db,
+          communityName,
+          greenSpaceOfTypeRef.id,
+          type
+        );
+      } catch {}
+    })
+  );
 }
 
 function setCommunityCenterAsync(db, communityName, center) {

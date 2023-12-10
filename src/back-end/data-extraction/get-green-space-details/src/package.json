@@ -1,5 +1,5 @@
 {
-  "name": "get-community-green-spaces",
+  "name": "getCommunityGreenSpaces",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -13,6 +13,10 @@
   "engines": {
     "node": "18"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Garbage-in-data-out/firestore-bundles.git"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -23,5 +27,9 @@
   },
   "devDependencies": {
     "firebase-functions-test": "^3.1.0"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/Garbage-in-data-out/firestore-bundles/issues"
+  },
+  "homepage": "https://github.com/Garbage-in-data-out/firestore-bundles#readme"
 }

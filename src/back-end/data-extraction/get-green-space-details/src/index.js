@@ -10,7 +10,7 @@ const program = require("./program.js");
 
 const db = getDb();
 
-exports.getCommunityGreenSpaces = onRequest(
+exports.getGreenSpaceDetails = onRequest(
   { region: process.env.DEPLOYMENT_ZONE, cors: true },
   async (req, res) => {
     if (req.method === "OPTIONS") {
